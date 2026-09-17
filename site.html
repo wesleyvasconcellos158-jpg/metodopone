@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iCloud = Pix | Transforme seu iPhone em renda</title>
+  <meta name="description" content="Tem iPhone com iCloud ativo? Participe do Método Phone e receba via Pix. Indique amigos e ganhe também.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['Space Grotesk', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#F4F1FF',
+              100: '#EBE5FF',
+              200: '#D9CEFF',
+              300: '#BFA8FF',
+              400: '#9F76FF',
+              500: '#7C42FF',
+              600: '#6A24F5',
+              700: '#5A18D6',
+              800: '#4A17AF',
+              900: '#3D178C',
+            },
+            mint: {
+              400: '#34E5B0',
+              500: '#10C98F',
+              600: '#0AA075',
+            },
+            ink: {
+              900: '#0B0518',
+              800: '#160B2B',
+              700: '#241340',
+            }
+          },
+          backgroundImage: {
+            'brand-gradient': 'linear-gradient(135deg, #6A24F5 0%, #34E5B0 100%)',
+            'brand-gradient-soft': 'linear-gradient(135deg, #F4F1FF 0%, #E6FBF4 100%)',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .grad-text {
+      background: linear-gradient(135deg, #6A24F5 0%, #10C98F 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .grain {
+      background-image: radial-gradient(circle at 1px 1px, rgba(106,36,245,0.15) 1px, transparent 0);
+      background-size: 22px 22px;
+    }
+    .blob {
+      filter: blur(80px);
+      opacity: 0.55;
+    }
+    .phone-frame {
+      background: linear-gradient(160deg, #2a2140 0%, #0b0518 100%);
+      border-radius: 2.75rem;
+      padding: 0.6rem;
+      box-shadow: 0 40px 80px -30px rgba(106,36,245,0.55), 0 0 0 1px rgba(255,255,255,0.06) inset;
+    }
+    .phone-screen-inner {
+      background: radial-gradient(120% 100% at 50% 0%, #2b1b52 0%, #14082b 60%);
+      border-radius: 2.25rem;
+      overflow: hidden;
+      position: relative;
+      height: 100%;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 2.5rem 1rem 1rem;
+    }
+    .notch {
+      position: absolute;
+      top: 0.7rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5.5rem;
+      height: 1.35rem;
+      background: #0b0518;
+      border-radius: 999px;
+    }
+    .pix-card {
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      padding: 0.7rem 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .pix-badge {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #10C98F, #34E5B0);
+      display: grid; place-items: center;
+      flex-shrink: 0;
+      color: #0b0518;
+      font-weight: 800;
+      font-size: 0.75rem;
+    }
+    .ticker-track {
+      display: flex;
+      gap: 3rem;
+      animation: ticker 28s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    details[open] .chev { transform: rotate(180deg); }
+    .step-card:hover .step-num { transform: scale(1.15) rotate(-6deg); }
+    .step-num { transition: transform .4s cubic-bezier(.2,.7,.2,1); }
+    .marquee-mask {
+      mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    }
+    .dot-row::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(106,36,245,0.4), rgba(52,229,176,0.4));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="bg-white text-ink-900 antialiased font-sans">
+
+  <!-- HEADER -->
+  <header class="fixed inset-x-0 top-0 z-50">
+    <div class="mx-auto max-w-6xl px-4 pt-4">
+      <div class="flex h-14 items-center justify-between rounded-2xl border border-white/60 bg-white/70 backdrop-blur-xl px-4 shadow-lg shadow-brand-500/5">
+        <a href="#top" class="flex items-center gap-2">
+          <div class="grid h-9 w-9 place-items-center rounded-xl bg-brand-gradient text-white font-display font-bold">i=</div>
+          <span class="font-display font-bold tracking-tight text-lg">iCloud<span class="text-brand-500">·</span>Pix</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-ink-900/60">
+          <a href="#como-funciona" class="rounded-full px-3.5 py-2 hover:bg-brand-50 hover:text-brand-700 transition">Como funciona</a>
+          <a href="#valores" class="rounded-full px-3.5 py-2 hover:bg-brand-50 hover:text-brand-700 transition">Valores</a>
+          <a href="#indicacao" class="rounded-full px-3.5 py-2 hover:bg-brand-50 hover:text-brand-700 transition">Indicação</a>
+          <a href="#faq" class="rounded-full px-3.5 py-2 hover:bg-brand-50 hover:text-brand-700 transition">FAQ</a>
+        </nav>
+        <a href="https://chat.whatsapp.com/GnP6bJOm8be658CGjhGoS9" target="_blank" rel="noopener noreferrer"
+           class="group inline-flex h-10 items-center gap-2 rounded-xl bg-ink-900 px-4 text-sm font-semibold text-white transition hover:bg-brand-600">
+          <span class="h-1.5 w-1.5 rounded-full bg-mint-400 animate-pulse"></span>
+          Entrar no grupo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="top" class="relative overflow-hidden bg-white pt-28 sm:pt-32 md:pt-36 pb-16 md:pb-24">
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <div class="grain absolute inset-0 opacity-50"></div>
+      <div class="blob absolute -top-20 left-1/3 h-80 w-80 rounded-full bg-brand-400"></div>
+      <div class="blob absolute top-40 -right-20 h-72 w-72 rounded-full bg-mint-400"></div>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="grid items-center gap-14 lg:grid-cols-[1.05fr,1fr] lg:gap-12">
+
+        <!-- Coluna esquerda: mockup -->
+        <div class="order-2 lg:order-1 flex justify-center lg:justify-start">
+          <div class="relative">
+            <!-- Cartão flutuante topo -->
+            <div class="absolute -top-6 -left-6 z-20 hidden sm:flex items-center gap-2 rounded-2xl border border-black/5 bg-white/95 px-4 py-3 shadow-xl shadow-brand-900/10 backdrop-blur">
+              <div class="grid h-9 w-9 place-items-center rounded-xl bg-mint-500/15 text-mint-600">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              <div>
+                <p class="text-[10px] font-semibold uppercase tracking-wider text-ink-900/50">Status</p>
+                <p class="text-xs font-bold">Pix enviado</p>
+              </div>
+            </div>
+
+            <!-- Cartão flutuante base -->
+            <div class="absolute -bottom-6 -right-4 z-20 hidden sm:flex items-center gap-2 rounded-2xl border border-black/5 bg-white/95 px-4 py-3 shadow-xl shadow-brand-900/10 backdrop-blur">
+              <div class="grid h-9 w-9 place-items-center rounded-xl bg-brand-500/15 text-brand-600">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div>
+                <p class="text-[10px] font-semibold uppercase tracking-wider text-ink-900/50">Total hoje</p>
+                <p class="text-xs font-bold">R$ 1.250,00</p>
+              </div>
+            </div>
+
+            <div class="phone-frame aspect-[9/19] w-[260px] sm:w-[290px] md:w-[310px]">
+              <div class="phone-screen-inner">
+                <span class="notch"></span>
+                <div class="mt-3 text-center">
+                  <p class="font-display text-4xl font-bold tracking-tight">9:41</p>
+                  <p class="mt-1 text-[10px] uppercase tracking-widest text-white/50">Método Phone</p>
+                </div>
+                <div class="mt-6 space-y-2.5">
+                  <div class="pix-card">
+                    <div class="pix-badge">R$</div>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-[10px] text-white/50">Pix recebido · agora</p>
+                      <p class="text-sm font-semibold">+ R$ 500,00</p>
+                    </div>
+                  </div>
+                  <div class="pix-card">
+                    <div class="pix-badge">R$</div>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-[10px] text-white/50">Pix recebido · 2 min</p>
+                      <p class="text-sm font-semibold">+ R$ 400,00</p>
+                    </div>
+                  </div>
+                  <div class="pix-card">
+                    <div class="pix-badge">R$</div>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-[10px] text-white/50">Pix recebido · 5 min</p>
+                      <p class="text-sm font-semibold">+ R$ 350,00</p>
+                    </div>
+                  </div>
+                  <div class="pix-card opacity-60">
+                    <div class="pix-badge">R$</div>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-[10px] text-white/50">Processando…</p>
+                      <p class="text-sm font-semibold text-white/60">+ R$ ???</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-auto mb-2 text-center text-[10px] uppercase tracking-widest text-white/30">Sem senha · Sem cartão</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coluna direita: texto -->
+        <div class="order-1 lg:order-2 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-700">
+            <span class="h-1.5 w-1.5 rounded-full bg-mint-500 animate-pulse"></span>
+            Novo: pagamentos via Pix na hora
+          </div>
+          <h1 class="mt-5 font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
+            Seu iPhone já vale.<br>
+            <span class="grad-text">Agora ele paga.</span>
+          </h1>
+          <p class="mx-auto mt-5 max-w-lg text-base leading-relaxed text-ink-900/60 sm:text-lg lg:mx-0">
+            Um procedimento simples, sem senha e sem complicação. Você recebe as instruções pelo WhatsApp, executa no seu aparelho e o Pix cai na conta.
+          </p>
+
+          <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
+            <a href="https://chat.whatsapp.com/GnP6bJOm8be658CGjhGoS9" target="_blank" rel="noopener noreferrer"
+               class="group inline-flex h-14 items-center justify-center gap-2.5 rounded-2xl bg-ink-900 px-7 text-base font-semibold text-white shadow-xl shadow-brand-900/20 transition hover:bg-brand-600 hover:shadow-brand-500/30">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Quero começar agora
+              <svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#como-funciona" class="inline-flex h-14 items-center justify-center gap-2 rounded-2xl border border-ink-900/10 bg-white px-6 text-[0.95rem] font-semibold text-ink-900 transition hover:border-brand-300 hover:text-brand-700">
+              Como funciona
+            </a>
+          </div>
+
+          <!-- Mini stats inline -->
+          <div class="mt-8 grid grid-cols-3 gap-3 border-t border-dashed border-ink-900/10 pt-6">
+            <div>
+              <p class="font-display text-2xl font-bold text-ink-900">R$ 1.6k</p>
+              <p class="text-[11px] font-medium uppercase tracking-wider text-ink-900/50">Até por pessoa</p>
+            </div>
+            <div>
+              <p class="font-display text-2xl font-bold text-ink-900">0</p>
+              <p class="text-[11px] font-medium uppercase tracking-wider text-ink-900/50">Custo p/ entrar</p>
+            </div>
+            <div>
+              <p class="font-display text-2xl font-bold text-ink-900">100%</p>
+              <p class="text-[11px] font-medium uppercase tracking-wider text-ink-900/50">Via Pix</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER TRUST -->
+  <section class="border-y border-ink-900/5 bg-brand-gradient-soft py-5">
+    <div class="marquee-mask overflow-hidden">
+      <div class="ticker-track text-sm font-medium text-ink-900/60">
+        <span class="flex items-center gap-2">🟣 Pix enviado em minutos</span>
+        <span class="flex items-center gap-2">🔒 Sem senha do Apple ID</span>
+        <span class="flex items-center gap-2">⚡ Passo a passo pelo WhatsApp</span>
+        <span class="flex items-center gap-2">💎 iPhone e iPad elegíveis</span>
+        <span class="flex items-center gap-2">🤝 Indique e ganhe</span>
+        <span class="flex items-center gap-2">🟢 Sem custo para participar</span>
+        <span class="flex items-center gap-2">🟣 Pix enviado em minutos</span>
+        <span class="flex items-center gap-2">🔒 Sem senha do Apple ID</span>
+        <span class="flex items-center gap-2">⚡ Passo a passo pelo WhatsApp</span>
+        <span class="flex items-center gap-2">💎 iPhone e iPad elegíveis</span>
+        <span class="flex items-center gap-2">🤝 Indique e ganhe</span>
+        <span class="flex items-center gap-2">🟢 Sem custo para participar</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section id="como-funciona" class="relative py-20 md:py-28">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="reveal max-w-2xl">
+        <span class="inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-700">Passo a passo</span>
+        <h2 class="mt-4 font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
+          Do primeiro “oi” ao Pix na conta em <span class="grad-text">quatro movimentos</span>.
+        </h2>
+      </div>
+
+      <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div class="step-card reveal relative rounded-3xl bg-white p-6 shadow-[0_1px_0_0_rgba(0,0,0,0.04),0_20px_40px_-24px_rgba(106,36,245,0.25)] dot-row">
+          <span class="step-num absolute -top-4 left-6 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-gradient font-display text-sm font-bold text-white shadow-lg">01</span>
+          <h3 class="mt-4 font-display text-lg font-bold">Chama no WhatsApp</h3>
+          <p class="mt-2 text-sm text-ink-900/60 leading-relaxed">Clique no botão e envie uma mensagem. Respondo com todas as informações.</p>
+        </div>
+        <div class="step-card reveal relative rounded-3xl bg-white p-6 shadow-[0_1px_0_0_rgba(0,0,0,0.04),0_20px_40px_-24px_rgba(106,36,245,0.25)] dot-row">
+          <span class="step-num absolute -top-4 left-6 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-gradient font-display text-sm font-bold text-white shadow-lg">02</span>
+          <h3 class="mt-4 font-display text-lg font-bold">Checamos o aparelho</h3>
+          <p class="mt-2 text-sm text-ink-900/60 leading-relaxed">Confirmamos juntos se o seu iCloud atende aos requisitos da categoria.</p>
+        </div>
+        <div class="step-card reveal relative rounded-3xl bg-white p-6 shadow-[0_1px_0_0_rgba(0,0,0,0.04),0_20px_40px_-24px_rgba(106,36,245,0.25)] dot-row">
+          <span class="step-num absolute -top-4 left-6 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-gradient font-display text-sm font-bold text-white shadow-lg">03</span>
+          <h3 class="mt-4 font-display text-lg font-bold">Instruções enviadas</h3>
+          <p class="mt-2 text-sm text-ink-900/60 leading-relaxed">Você recebe o passo a passo no WhatsApp e decide se quer seguir, sem pressão.</p>
+        </div>
+        <div class="step-card reveal relative rounded-3xl bg-white p-6 shadow-[0_1px_0_0_rgba(0,0,0,0.04),0_20px_40px_-24px_rgba(106,36,245,0.25)] dot-row">
+          <span class="step-num absolute -top-4 left-6 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-mint-500 font-display text-sm font-bold text-white shadow-lg">04</span>
+          <h3 class="mt-4 font-display text-lg font-bold">Pix cai na conta</h3>
+          <p class="mt-2 text-sm text-ink-900/60 leading-relaxed">Concluiu o procedimento, o pagamento sai via Pix na hora. Simples assim.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEGURANÇA — bloco escuro -->
+  <section class="relative overflow-hidden bg-ink-900 py-20 text-white md:py-24">
+    <div class="pointer-events-none absolute inset-0 -z-0">
+      <div class="blob absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-brand-600"></div>
+      <div class="blob absolute bottom-0 right-0 h-72 w-72 rounded-full bg-mint-500"></div>
+    </div>
+    <div class="relative mx-auto max-w-6xl px-4">
+      <div class="grid gap-10 md:grid-cols-[1fr,1.2fr] md:gap-16">
+        <div class="reveal">
+          <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-bold uppercase tracking-wider text-mint-400">
+            🔒 Segurança
+          </span>
+          <h2 class="mt-4 font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
+            Zero senha.<br>Zero risco. <span class="text-mint-400">Sério.</span>
+          </h2>
+          <p class="mt-4 max-w-md text-sm text-white/60 sm:text-base">
+            Nunca pedimos senha do Apple ID, código de dois fatores ou qualquer dado sensível. Tudo que você faz, faz você mesmo, no seu aparelho.
+          </p>
+        </div>
+        <div class="space-y-3">
+          <div class="reveal flex gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur">
+            <div class="grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl bg-mint-500/15 text-mint-400">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div>
+              <h3 class="font-display font-bold">Credenciais nunca são solicitadas</h3>
+              <p class="mt-1 text-sm text-white/60">Nem senha, nem código, nem chave de recuperação. Se alguém pedir em nosso nome, denuncie.</p>
+            </div>
+          </div>
+          <div class="reveal flex gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur">
+            <div class="grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl bg-brand-500/20 text-brand-300">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <div>
+              <h3 class="font-display font-bold">Executado por você mesmo</h3>
+              <p class="mt-1 text-sm text-white/60">As instruções chegam pelo WhatsApp e são aplicadas no seu aparelho. Nada é alterado no iCloud.</p>
+            </div>
+          </div>
+          <div class="reveal flex gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur">
+            <div class="grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl bg-mint-500/15 text-mint-400">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-display font-bold">Suporte humano no WhatsApp</h3>
+              <p class="mt-1 text-sm text-white/60">Ficou com dúvida? Chama. Explicamos cada etapa antes de você decidir seguir.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALORES -->
+  <section id="valores" class="relative py-20 md:py-28">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="reveal mx-auto max-w-2xl text-center">
+        <span class="inline-flex items-center gap-2 rounded-full bg-mint-500/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-mint-600">Valores</span>
+        <h2 class="mt-4 font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
+          Quanto <span class="grad-text">você recebe</span>.
+        </h2>
+        <p class="mt-3 text-sm text-ink-900/60 sm:text-base">Tabela base com valores mínimos. Os valores finais são confirmados no WhatsApp conforme o aparelho. Pix enviado após o procedimento.</p>
+      </div>
+
+      <div class="reveal mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="group relative overflow-hidden rounded-3xl border border-brand-100 bg-white p-6 transition hover:-translate-y-1 hover:border-brand-300 hover:shadow-xl hover:shadow-brand-500/10">
+          <span class="absolute right-4 top-4 rounded-full bg-brand-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-brand-700">Cat. A</span>
+          <p class="font-display text-xs font-bold uppercase tracking-widest text-ink-900/40">Top de linha</p>
+          <h3 class="mt-2 font-display text-lg font-bold">iPhone 17 Pro / Pro Max</h3>
+          <div class="mt-5 border-t border-dashed border-ink-900/10 pt-4">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-ink-900/40">Participante</p>
+            <p class="font-display text-3xl font-bold grad-text">R$ 400</p>
+            <p class="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ink-900/40">Indicação</p>
+            <p class="font-display text-lg font-bold text-ink-900">R$ 100</p>
+          </div>
+        </div>
+        <div class="group relative overflow-hidden rounded-3xl border border-brand-100 bg-white p-6 transition hover:-translate-y-1 hover:border-brand-300 hover:shadow-xl hover:shadow-brand-500/10">
+          <span class="absolute right-4 top-4 rounded-full bg-brand-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-brand-700">Cat. B</span>
+          <p class="font-display text-xs font-bold uppercase tracking-widest text-ink-900/40">Linha 15</p>
+          <h3 class="mt-2 font-display text-lg font-bold">iPhone 15 / 15 Plus</h3>
+          <div class="mt-5 border-t border-dashed border-ink-900/10 pt-4">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-ink-900/40">Participante</p>
+            <p class="font-display text-3xl font-bold grad-text">R$ 350</p>
+            <p class="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ink-900/40">Indicação</p>
+            <p class="font-display text-lg font-bold text-ink-900">R$ 300</p>
+          </div>
+        </div>
+        <div class="group relative overflow-hidden rounded-3xl border border-brand-100 bg-white p-6 transition hover:-translate-y-1 hover:border-brand-300 hover:shadow-xl hover:shadow-brand-500/10">
+          <span class="absolute right-4 top-4 rounded-full bg-mint-500/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-mint-600">Cat. C</span>
+          <p class="font-display text-xs font-bold uppercase tracking-widest text-ink-900/40">Populares</p>
+          <h3 class="mt-2 font-display text-lg font-bold">iPhone 14 / 13 / 12 (Pro/Max)</h3>
+          <div class="mt-5 border-t border-dashed border-ink-900/10 pt-4">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-ink-900/40">Participante</p>
+            <p class="font-display text-3xl font-bold grad-text">R$ 500</p>
+            <p class="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ink-900/40">Indicação</p>
+            <p class="font-display text-lg font-bold text-ink-900">R$ 200</p>
+          </div>
+        </div>
+        <div class="group relative overflow-hidden rounded-3xl border border-dashed border-ink-900/15 bg-brand-gradient-soft p-6 transition hover:-translate-y-1">
+          <span class="absolute right-4 top-4 rounded-full bg-white px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-ink-900/60">Cat. D</span>
+          <p class="font-display text-xs font-bold uppercase tracking-widest text-ink-900/40">Outros</p>
+          <h3 class="mt-2 font-display text-lg font-bold">Modelos anteriores e iPads</h3>
+          <div class="mt-5 border-t border-dashed border-ink-900/10 pt-4">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-ink-900/40">Participante</p>
+            <p class="font-display text-3xl font-bold text-ink-900/40">Consultar</p>
+            <p class="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ink-900/40">Indicação</p>
+            <p class="font-display text-lg font-bold text-ink-900/40">Consultar</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="reveal mt-6 text-center text-xs text-ink-900/40">*Valores aproximados. Confirmação individual via WhatsApp antes de qualquer etapa.</p>
+    </div>
+  </section>
+
+  <!-- INDICAÇÃO -->
+  <section id="indicacao" class="relative overflow-hidden py-20 md:py-24">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-600 via-brand-500 to-mint-500 px-6 py-14 text-white sm:px-12 sm:py-16">
+        <div class="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/10 blur-2xl"></div>
+        <div class="pointer-events-none absolute -left-16 -bottom-16 h-64 w-64 rounded-full bg-mint-400/30 blur-3xl"></div>
+
+        <div class="relative grid items-center gap-10 md:grid-cols-[1.2fr,1fr]">
+          <div class="reveal">
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider">🤝 Indicação</span>
+            <h2 class="mt-4 font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
+              Ganha quem participa.<br>Ganha quem <span class="text-white/80">indica</span>.
+            </h2>
+            <p class="mt-4 max-w-lg text-sm text-white/80 sm:text-base">
+              Sem limite de indicações. Cada pessoa qualificada que você trouxer e concluir o procedimento gera uma nova recompensa pra você, direto no Pix.
+            </p>
+            <a href="https://chat.whatsapp.com/GnP6bJOm8be658CGjhGoS9" target="_blank" rel="noopener noreferrer"
+               class="mt-7 inline-flex h-13 items-center gap-2.5 rounded-2xl bg-white px-6 py-3.5 text-sm font-bold text-ink-900 shadow-xl shadow-black/10 transition hover:-translate-y-0.5">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 text-mint-600"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Quero indicar agora
+            </a>
+          </div>
+
+          <div class="reveal grid gap-3 sm:grid-cols-2 md:grid-cols-1">
+            <div class="rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur">
+              <p class="font-display text-3xl font-bold">∞</p>
+              <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-white/70">Indicações por pessoa</p>
+            </div>
+            <div class="rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur">
+              <p class="font-display text-3xl font-bold">R$ 300</p>
+              <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-white/70">Bônus máximo por indicação</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="bg-brand-gradient-soft py-20 md:py-24">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="reveal mx-auto max-w-xl text-center">
+        <span class="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-700 shadow-sm">FAQ</span>
+        <h2 class="mt-4 font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
+          Ainda com dúvida? A gente responde.
+        </h2>
+      </div>
+
+      <div class="mt-12 grid gap-3 md:grid-cols-2">
+        <details class="reveal group rounded-2xl bg-white p-5 shadow-sm transition open:shadow-md">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink-900">
+            O que preciso para participar?
+            <svg class="chev h-5 w-5 flex-shrink-0 text-brand-500 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <p class="mt-3 text-sm text-ink-900/60 leading-relaxed">Apenas um iPhone com iCloud ativo. Nada mais.</p>
+        </details>
+        <details class="reveal group rounded-2xl bg-white p-5 shadow-sm transition open:shadow-md">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink-900">
+            Quando recebo o pagamento?
+            <svg class="chev h-5 w-5 flex-shrink-0 text-brand-500 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <p class="mt-3 text-sm text-ink-900/60 leading-relaxed">Assim que o procedimento for concluído, o Pix cai na hora.</p>
+        </details>
+        <details class="reveal group rounded-2xl bg-white p-5 shadow-sm transition open:shadow-md">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink-900">
+            Preciso pagar algo para participar?
+            <svg class="chev h-5 w-5 flex-shrink-0 text-brand-500 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <p class="mt-3 text-sm text-ink-900/60 leading-relaxed">Não. Nada é cobrado do participante em nenhum momento.</p>
+        </details>
+        <details class="reveal group rounded-2xl bg-white p-5 shadow-sm transition open:shadow-md">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink-900">
+            Vocês pedem a senha do meu Apple ID?
+            <svg class="chev h-5 w-5 flex-shrink-0 text-brand-500 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <p class="mt-3 text-sm text-ink-900/60 leading-relaxed">Nunca. Não pedimos senha, código de dois fatores nem chave de recuperação. Se alguém pedir em nosso nome, não forneça.</p>
+        </details>
+        <details class="reveal group rounded-2xl bg-white p-5 shadow-sm transition open:shadow-md">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink-900">
+            Como funciona o contato?
+            <svg class="chev h-5 w-5 flex-shrink-0 text-brand-500 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <p class="mt-3 text-sm text-ink-900/60 leading-relaxed">Tudo pelo WhatsApp. Sem formulários públicos, sem dados sensíveis. Você decide em cada etapa.</p>
+        </details>
+        <details class="reveal group rounded-2xl bg-white p-5 shadow-sm transition open:shadow-md">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink-900">
+            Quais dados vocês coletam?
+            <svg class="chev h-5 w-5 flex-shrink-0 text-brand-500 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <p class="mt-3 text-sm text-ink-900/60 leading-relaxed">Apenas o mínimo: contato de WhatsApp, modelo do aparelho e chave Pix no momento do pagamento. Nada de credenciais.</p>
+        </details>
+        <details class="reveal group rounded-2xl bg-white p-5 shadow-sm transition open:shadow-md">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink-900">
+            Como funciona a indicação?
+            <svg class="chev h-5 w-5 flex-shrink-0 text-brand-500 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <p class="mt-3 text-sm text-ink-900/60 leading-relaxed">Apresente uma pessoa qualificada que participe. Após a conclusão dela, você recebe a recompensa de indicação.</p>
+        </details>
+        <details class="reveal group rounded-2xl bg-white p-5 shadow-sm transition open:shadow-md">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink-900">
+            Sou obrigado a seguir em frente?
+            <svg class="chev h-5 w-5 flex-shrink-0 text-brand-500 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <p class="mt-3 text-sm text-ink-900/60 leading-relaxed">De jeito nenhum. O primeiro contato é 100% informativo. Só segue quem quiser.</p>
+        </details>
+      </div>
+
+      <!-- CTA final -->
+      <div class="reveal mt-14 flex flex-col items-center gap-4 text-center">
+        <p class="font-display text-2xl font-bold sm:text-3xl">Bora começar?</p>
+        <a href="https://chat.whatsapp.com/GnP6bJOm8be658CGjhGoS9" target="_blank" rel="noopener noreferrer"
+           class="group inline-flex h-14 items-center gap-2.5 rounded-2xl bg-ink-900 px-7 text-base font-semibold text-white shadow-xl shadow-brand-900/20 transition hover:bg-brand-600">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Entrar no grupo do WhatsApp
+          <svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-ink-900 py-12 text-white/50">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="flex flex-col items-center gap-6 text-center">
+        <div class="flex items-center gap-2">
+          <div class="grid h-9 w-9 place-items-center rounded-xl bg-brand-gradient text-white font-display font-bold">i=</div>
+          <span class="font-display font-bold tracking-tight text-lg text-white">iCloud<span class="text-brand-400">·</span>Pix</span>
+        </div>
+        <p class="max-w-md text-xs">
+          Este site não é afiliado à Apple Inc. Todas as marcas registradas pertencem aos seus respectivos proprietários.
+        </p>
+        <div class="flex gap-6 text-xs">
+          <a href="#como-funciona" class="hover:text-white transition">Como funciona</a>
+          <a href="#valores" class="hover:text-white transition">Valores</a>
+          <a href="#faq" class="hover:text-white transition">FAQ</a>
+        </div>
+        <p class="text-xs">© 2025 Método Phone. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOTÃO FLUTUANTE WHATSAPP -->
+  <a href="https://chat.whatsapp.com/GnP6bJOm8be658CGjhGoS9" target="_blank" rel="noopener noreferrer"
+     class="fixed bottom-6 right-6 z-50 grid h-14 w-14 place-items-center rounded-2xl bg-ink-900 text-white shadow-2xl shadow-brand-900/30 transition hover:scale-105 hover:bg-brand-600"
+     title="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
